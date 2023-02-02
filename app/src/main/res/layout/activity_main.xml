@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/iv_zhangfei"
+        android:layout_width="103dp"
+        android:layout_height="206dp"
+        android:src="@drawable/zhangfei" />
+
+    <ImageView
+        android:id="@+id/iv_caocao"
+        android:layout_width="206dp"
+        android:layout_height="206dp"
+        android:layout_toRightOf="@id/iv_zhangfei"
+        android:src="@drawable/caocao" />
+    <ImageView
+        android:id="@+id/iv_zhaoyun"
+        android:layout_width="103dp"
+        android:layout_height="206dp"
+        android:layout_toRightOf="@id/iv_caocao"
+        android:src="@drawable/zhaoyun" />
+
+    <ImageView
+        android:id="@+id/iv_machao"
+        android:layout_width="103dp"
+        android:layout_height="206dp"
+        android:layout_below="@id/iv_zhangfei"
+        android:src="@drawable/machao" />
+
+    <ImageView
+        android:id="@+id/iv_guanyu"
+        android:layout_width="206dp"
+        android:layout_height="103dp"
+        android:layout_below="@id/iv_caocao"
+        android:layout_toRightOf="@id/iv_machao"
+        android:src="@drawable/guanyu" />
+
+    <ImageView
+        android:id="@+id/iv_huangzhong"
+        android:layout_width="103dp"
+        android:layout_height="206dp"
+        android:layout_below="@id/iv_zhaoyun"
+        android:layout_toRightOf="@id/iv_guanyu"
+        android:src="@drawable/huangzhong" />
+    <ImageView
+        android:id="@+id/iv_solider1"
+        android:layout_width="103dp"
+        android:layout_height="103dp"
+        android:layout_below="@id/iv_guanyu"
+        android:layout_toRightOf="@id/iv_machao"
+        android:src="@drawable/solider" />
+    <ImageView
+        android:id="@+id/iv_solider2"
+        android:layout_width="103dp"
+        android:layout_height="103dp"
+        android:layout_below="@id/iv_guanyu"
+        android:layout_toRightOf="@id/iv_solider1"
+        android:src="@drawable/solider" />
+
+    <ImageView
+        android:id="@+id/iv_solider3"
+        android:layout_width="103dp"
+        android:layout_height="103dp"
+        android:layout_below="@id/iv_machao"
+        android:src="@drawable/solider" />
+    <ImageView
+        android:id="@+id/iv_blank1"
+        android:layout_width="103dp"
+        android:layout_height="103dp"
+        android:layout_below="@id/iv_solider1"
+        android:layout_toRightOf="@id/iv_solider3"
+        android:src="@drawable/blank" />
+
+    <ImageView
+        android:id="@+id/iv_blank2"
+        android:layout_width="103dp"
+        android:layout_height="103dp"
+        android:layout_below="@id/iv_solider2"
+        android:layout_toRightOf="@id/iv_blank1"
+        android:src="@drawable/blank" />
+    <ImageView
+        android:id="@+id/iv_solider4"
+        android:layout_width="103dp"
+        android:layout_height="103dp"
+        android:layout_below="@id/iv_huangzhong"
+        android:layout_toRightOf="@id/iv_blank2"
+        android:src="@drawable/solider" />
+
+</RelativeLayout>
