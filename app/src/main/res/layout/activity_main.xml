@@ -1,94 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hua Rong Dao Puzzle"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            tools:text="Hua Rong Dao Puzzle" />
+    </LinearLayout>
+
+    <GridLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="4"
+    android:rowCount="5"
     tools:context=".MainActivity">
+
 
     <ImageView
         android:id="@+id/iv_zhangfei"
         android:layout_width="103dp"
         android:layout_height="206dp"
+        android:layout_row="0"
+        android:layout_column="0"
         android:src="@drawable/zhangfei" />
 
     <ImageView
         android:id="@+id/iv_caocao"
         android:layout_width="206dp"
         android:layout_height="206dp"
-        android:layout_toRightOf="@id/iv_zhangfei"
+        android:layout_row="0"
+        android:layout_column="1"
+        android:layout_columnSpan="2"
         android:src="@drawable/caocao" />
     <ImageView
         android:id="@+id/iv_zhaoyun"
         android:layout_width="103dp"
         android:layout_height="206dp"
-        android:layout_toRightOf="@id/iv_caocao"
+        android:layout_row="0"
+        android:layout_column="3"
         android:src="@drawable/zhaoyun" />
 
     <ImageView
         android:id="@+id/iv_machao"
         android:layout_width="103dp"
         android:layout_height="206dp"
-        android:layout_below="@id/iv_zhangfei"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:layout_rowSpan="2"
         android:src="@drawable/machao" />
 
     <ImageView
         android:id="@+id/iv_guanyu"
         android:layout_width="206dp"
         android:layout_height="103dp"
-        android:layout_below="@id/iv_caocao"
-        android:layout_toRightOf="@id/iv_machao"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:layout_columnSpan="2"
         android:src="@drawable/guanyu" />
 
     <ImageView
         android:id="@+id/iv_huangzhong"
         android:layout_width="103dp"
         android:layout_height="206dp"
-        android:layout_below="@id/iv_zhaoyun"
-        android:layout_toRightOf="@id/iv_guanyu"
+        android:layout_row="1"
+        android:layout_column="3"
+        android:layout_rowSpan="2"
         android:src="@drawable/huangzhong" />
     <ImageView
         android:id="@+id/iv_solider1"
         android:layout_width="103dp"
         android:layout_height="103dp"
-        android:layout_below="@id/iv_guanyu"
-        android:layout_toRightOf="@id/iv_machao"
+        android:layout_row="2"
+        android:layout_column="1"
         android:src="@drawable/solider" />
     <ImageView
         android:id="@+id/iv_solider2"
         android:layout_width="103dp"
         android:layout_height="103dp"
-        android:layout_below="@id/iv_guanyu"
-        android:layout_toRightOf="@id/iv_solider1"
+        android:layout_row="2"
+        android:layout_column="2"
         android:src="@drawable/solider" />
 
     <ImageView
         android:id="@+id/iv_solider3"
         android:layout_width="103dp"
         android:layout_height="103dp"
-        android:layout_below="@id/iv_machao"
+        android:layout_row="3"
+        android:layout_column="0"
         android:src="@drawable/solider" />
     <ImageView
         android:id="@+id/iv_blank1"
         android:layout_width="103dp"
         android:layout_height="103dp"
-        android:layout_below="@id/iv_solider1"
-        android:layout_toRightOf="@id/iv_solider3"
+        android:layout_row="3"
+        android:layout_column="1"
         android:src="@drawable/blank" />
 
     <ImageView
         android:id="@+id/iv_blank2"
         android:layout_width="103dp"
         android:layout_height="103dp"
-        android:layout_below="@id/iv_solider2"
-        android:layout_toRightOf="@id/iv_blank1"
+        android:layout_row="3"
+        android:layout_column="2"
         android:src="@drawable/blank" />
     <ImageView
         android:id="@+id/iv_solider4"
         android:layout_width="103dp"
         android:layout_height="103dp"
-        android:layout_below="@id/iv_huangzhong"
-        android:layout_toRightOf="@id/iv_blank2"
+        android:layout_row="3"
+        android:layout_column="3"
         android:src="@drawable/solider" />
 
-</RelativeLayout>
+</GridLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvStep"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+
+            android:layout_gravity="bottom"
+            android:text="Moving Step:"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvStepValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="0"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

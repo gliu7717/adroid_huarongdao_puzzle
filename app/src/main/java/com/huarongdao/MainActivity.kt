@@ -1,12 +1,14 @@
 package com.huarongdao
 
 import android.annotation.SuppressLint
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
 import android.view.ViewTreeObserver
 import android.widget.ImageView
+import android.widget.TextView
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
@@ -14,11 +16,14 @@ class MainActivity : AppCompatActivity() {
     private var currentView: ImageView? = null
     private val topMargin = 139
     private val precision = 5
-
+    private var movedSteps = 0
+    private var stepValueView: TextView? = null
+private lateinit var  mediaPlay : MediaPlayer
     @SuppressLint("ResourceType")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        mediaPlay = MediaPlayer.create(this, R.raw.sound)
         blockers[0] = findViewById<ImageView> (R.id.iv_zhangfei)
         blockers[1] = findViewById<ImageView> (R.id.iv_caocao)
         blockers[2] = findViewById<ImageView> (R.id.iv_zhaoyun)
@@ -31,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         blockers[9] = findViewById<ImageView> (R.id.iv_blank1)
         blockers[10] = findViewById<ImageView> (R.id.iv_blank2)
         blockers[11] = findViewById<ImageView> (R.id.iv_solider4)
-
+        stepValueView = findViewById<TextView>(R.id.tvStepValue)
         val scale = resources.displayMetrics.density
         Log.i("GTAG", scale.toString())
         val vto:ViewTreeObserver? = blockers[11]?.getViewTreeObserver()
@@ -86,6 +91,7 @@ class MainActivity : AppCompatActivity() {
         else if(event?.action == MotionEvent.ACTION_UP)
         {
             if(currentView!=null) {
+                var moved  = false
                 dx = currentView?.x!! - original_x
                 dy = currentView?.y!! - original_y
                 Log.i("GTAG", "dx:" + dx.toString() + ":dy:" + dy.toString())
@@ -93,23 +99,48 @@ class MainActivity : AppCompatActivity() {
                 currentView?.y = original_y
                 var dir = getDirection (dx, dy)
                 Log.i("GTAG", "dir:" + dir.toString())
-                if(dir == 1)
-                    moveLeft(currentView)
-                if(dir == 2)
-                    moveRight(currentView)
-                if(dir == 3)
-                    moveUp(currentView)
-                if(dir == 4)
-                    moveDown(currentView)
-
+                if(dir == 1) {
+                    moved = moveLeft(currentView)
+                    if(!moved){
+                        if(dy > 0) moved = moveDown(currentView)
+                        else if(dy < 0) moved = moveUp(currentView)
+                    }
+                }
+                if(dir == 2) {
+                    moved = moveRight(currentView)
+                    if(!moved){
+                        if(dy > 0) moved = moveDown(currentView)
+                        else if(dy < 0) moved= moveUp(currentView)
+                    }
+                }
+                if(dir == 3) {
+                    moved =moveUp(currentView)
+                    if(!moved){
+                        if(dx > 0) moved= moveRight(currentView)
+                        else if(dx < 0) moved = moveLeft(currentView)
+                    }
+                }
+                if(dir == 4) {
+                    moved = moveDown(currentView)
+                    if (!moved) {
+                        if (dx > 0) moved = moveRight(currentView)
+                        else if (dx < 0) moved = moveLeft(currentView)
+                    }
+                }
+                if(moved){
+                    mediaPlay.start()
+                    movedSteps++
+                    stepValueView?.text= movedSteps.toString()
+                }
             }
         }
         return super.onTouchEvent(event)
     }
 
-    private fun moveLeft(view:ImageView?):Unit
+    private fun moveLeft(view:ImageView?):Boolean
     {
         val neighbours: Array<ImageView?>? = getNeighbourBlankBlockViews(view,1)
+        var moved = false
         if(neighbours!= null && view != null)
         {
             Log.i("GTAG", "neibour and view are not null")
@@ -121,17 +152,22 @@ class MainActivity : AppCompatActivity() {
                 neighbours[0]?.getLocationOnScreen(loc)
                 view!!.x = view.x.plus(-w!!)
                 neighbours[0]?.x = neighbours[0]?.x?.plus(view!!.width)!!
+                moved = true
             }
             if(neighbours[1]!=null)
             {
                 neighbours[1]?.x = neighbours[1]?.x?.plus(view!!.width)!!
+                moved = true
             }
+
         }
+        return moved
     }
 
-    private fun moveRight(view:ImageView?):Unit
+    private fun moveRight(view:ImageView?):Boolean
     {
         val neighbours: Array<ImageView?>? = getNeighbourBlankBlockViews(view,2)
+        var moved = false
         if(neighbours!= null && view != null)
         {
             Log.i("GTAG", "neibour and view are not null")
@@ -143,16 +179,19 @@ class MainActivity : AppCompatActivity() {
                 neighbours[0]?.getLocationOnScreen(loc)
                 view!!.x = view.x.plus(w!!)
                 neighbours[0]?.x = neighbours[0]?.x?.plus(-view!!.width)!!
+                moved = true
             }
             if(neighbours[1]!=null)
             {
                 neighbours[1]?.x = neighbours[1]?.x?.plus(-view!!.width)!!
             }
         }
+        return moved
     }
 
-    private fun moveDown(view:ImageView?):Unit
+    private fun moveDown(view:ImageView?):Boolean
     {
+        var moved = false
         val neighbours: Array<ImageView?>? = getNeighbourBlankBlockViews(view,4)
         if(neighbours!= null && view != null)
         {
@@ -165,16 +204,19 @@ class MainActivity : AppCompatActivity() {
                 neighbours[0]?.getLocationOnScreen(loc)
                 view!!.y = view.y.plus(h!!)
                 neighbours[0]?.y = neighbours[0]?.y?.plus(-view!!.height)!!
+                moved = true
             }
             if(neighbours[1]!=null)
             {
                 neighbours[1]?.y = neighbours[1]?.y?.plus(-view!!.height)!!
             }
         }
+        return moved
     }
 
-    private fun moveUp(view:ImageView?):Unit
+    private fun moveUp(view:ImageView?):Boolean
     {
+        var moved = false
         val neighbours: Array<ImageView?>? = getNeighbourBlankBlockViews(view,3)
         if(neighbours!= null && view != null)
         {
@@ -187,12 +229,14 @@ class MainActivity : AppCompatActivity() {
                 neighbours[0]?.getLocationOnScreen(loc)
                 view!!.y = view.y.plus(-h!!)
                 neighbours[0]?.y = neighbours[0]?.y?.plus(view!!.height)!!
+                moved = true
             }
             if(neighbours[1]!=null)
             {
                 neighbours[1]?.y = neighbours[1]?.y?.plus(view!!.height)!!
             }
         }
+        return moved
     }
 
     private fun getLeftViews(view:ImageView?):Array<ImageView?>?
@@ -440,9 +484,9 @@ class MainActivity : AppCompatActivity() {
         }
         else if(dx >= 0 && dy <= 0){
             dir = if(dx < -dy)
-                1// move right
+                3// move up
             else
-                3 // move up
+                2 // move right
         }
         else if(dx <= 0 && dy >= 0){
             dir = if(dy > -dx)
